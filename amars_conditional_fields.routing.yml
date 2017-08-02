@@ -1,0 +1,6 @@
+amars_conditional_fields:
+  path: /roblib/{count}
+  defaults:
+    _controller: Drupal\amars_conditional_fields\Controller\RoblibController::roblib
+  requirements:
+    _permission: access content

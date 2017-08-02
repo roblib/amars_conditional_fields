@@ -1,0 +1,151 @@
+<?php
+/**
+* @file
+* Custom Roblib module using API #states to set conditions on sighting report form fields for the AMARS project.
+*/
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function amars_conditional_fields_help($route_name, RouteMatchInterface $route_match) {
+    switch ($route_name) {
+        // Main module help for the amars_conditional_fields module.
+        case 'help.page.amars_conditional_fields':
+            $output = '';
+            $output .= '<h3>' . t('About') . '</h3>';
+            $output .= '<p>' . t('AMARS Conditional Fields module.') . '</p>';
+            return $output;
+
+        default:
+    }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function amars_conditional_fields_theme() {
+    return [
+        'amars_conditional_fields' => [
+            'render element' => 'children',
+        ],
+    ];
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * On fox_sighting_report node add and edit, set conditional fields using API #states based on values of
+ * other form fields.
+ */
+function amars_conditional_fields_form_node_fox_sighting_report_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  $form['field_report_frequency_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_frequency"]' => ['value' => 'Other (please specify below)']
+    ]
+  ];
+
+  $form['field_report_count_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_count"]' => ['value' => '4 or more']
+    ]
+  ];
+
+  $form['field_report_age_2']['widget']['#states'] = [
+    'visible' => [
+      [':input[name="field_report_count"]' => ['value' => (string) '2']],
+      [':input[name="field_report_count"]' => ['value' => (string) '3']],
+      [':input[name="field_report_count"]' => ['value' => (string) '4 or more']],
+    ]
+  ];
+
+  $form['field_report_age_3']['widget']['#states'] = [
+    'visible' => [
+      [':input[name="field_report_count"]' => ['value' => (string) '3']],
+      [':input[name="field_report_count"]' => ['value' => (string) '4 or more']],
+    ]
+  ];
+
+  $form['field_report_age_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_count"]' => ['value' => '4 or more']
+    ]
+  ];
+
+  $form['field_fox_report_colour_2']['widget']['#states'] = [
+    'visible' => [
+      [':input[name="field_report_count"]' => ['value' => (string) '2']],
+      [':input[name="field_report_count"]' => ['value' => (string) '3']],
+      [':input[name="field_report_count"]' => ['value' => (string) '4 or more']],
+    ]
+  ];
+
+  $form['field_fox_report_colour_3']['widget']['#states'] = [
+    'visible' => [
+      [':input[name="field_report_count"]' => ['value' => (string) '3']],
+      [':input[name="field_report_count"]' => ['value' => (string) '4 or more']],
+    ]
+  ];
+
+  $form['field_fox_report_colour_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+        ':input[name="field_report_count"]' => ['value' => '4 or more']
+    ]
+  ];
+
+  $form['field_report_weather_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_weather"]' => ['value' => 'Other (please specify below)']
+    ]
+  ];
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * On coyote_sighting_report node add and edit, set conditional fields using API #states based on values of
+ * other form fields.
+ */
+function amars_conditional_fields_form_node_coyote_sighting_report_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  $form['field_report_count_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_count"]' => ['value' => '4 or more']
+    ]
+  ];
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * On wildlife_sighting_report node add and edit, set conditional fields using API #states based on values of
+ * other form fields.
+ */
+function amars_conditional_fields_form_node_wildlife_sighting_report_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+  $form['field_report_feeder_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_feeder[Other (please specify below)]"]' => ['checked' => TRUE]
+    ]
+  ];
+
+  $form['field_report_feeder_animals_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_feeder_animals[Other (please specify below)]"]' => ['checked' => TRUE]
+    ]
+  ];
+
+  $form['field_report_animal_acts_more']['widget'][0]['value']['#states'] = [
+    'visible' => [
+      ':input[name="field_report_animal_acts[Other (please specify below)]"]' => ['checked' => TRUE]
+    ]
+  ];
+
+  return $form;
+}

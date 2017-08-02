@@ -1,0 +1,10 @@
+name: AMARS Conditional Fields
+description: 'Custom Roblib module using API #states to set conditions on sighting report form fields for the AMARS project.'
+package: Roblib
+
+type: module
+core: 8.x
+
+#configure: amars_conditional_fields.list
+dependencies:
+  - system (>=8.2.0)

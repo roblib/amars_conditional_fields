@@ -1,0 +1,14 @@
+{
+  "name": "roblib/amars_conditional_fields",
+  "type": "drupal-custom-module",
+  "description": "Custom Roblib module using API #states to set conditions on sighting report form fields for the AMARS project.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "",
+    "source": ""
+  },
+  "require": { }
+}
